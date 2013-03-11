@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
 <!--
-mvn clean package;java -cp "target/deploy/ccphoneUI-0.0.1-SNAPSHOT.jar:target/deploy/jfxrt.jar" org.micoli.phone.ccphoneUI.AnswerFrame
+mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.micoli.phone</groupId>
@@ -18,6 +18,21 @@ mvn clean package;java -cp "target/deploy/ccphoneUI-0.0.1-SNAPSHOT.jar:target/de
 		<ant.javafx.jar>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/lib/ant-javafx.jar</ant.javafx.jar>
 	</properties>
 	<dependencies>
+	<dependency>
+			<groupId>org.vert-x</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>1.2.3.final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vert-x</groupId>
+			<artifactId>vertx-platform</artifactId>
+			<version>1.2.3.final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.2</version>
+		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.peers</groupId>
 			<artifactId>peers-lib</artifactId>
