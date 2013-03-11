@@ -1,0 +1,135 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+<!--
+mvn clean package;java -cp "target/deploy/ccphoneUI-0.0.1-SNAPSHOT.jar:target/deploy/jfxrt.jar" org.micoli.phone.ccphoneUI.AnswerFrame
+-->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.micoli.phone</groupId>
+	<artifactId>ccphoneUI</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>ccphoneUI</name>
+	<description>javaFX UI for ccphone</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<fx.home>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/jre/lib/jfxrt.jar</fx.home>
+		<ant.javafx.jar>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/lib/ant-javafx.jar</ant.javafx.jar>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>net.sourceforge.peers</groupId>
+			<artifactId>peers-lib</artifactId>
+			<version>0.5-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx</artifactId>
+			<version>2.0</version>
+			<scope>system</scope>
+			<systemPath>${fx.home}</systemPath>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<configuration>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<taskdef
+									name="jfxdeploy"
+									classname="com.sun.javafx.tools.ant.DeployFXTask"
+									classpathref="maven.plugin.classpath" />
+								<taskdef
+									name="jfxsignjar"
+									classname="com.sun.javafx.tools.ant.FXSignJarTask"
+									classpathref="maven.plugin.classpath" />
+								<jfxdeploy
+									width="800"
+									height="600"
+									outdir="${project.build.directory}/deploy"
+									outfile="${project.build.finalName}"
+								>
+									<info title="${project.name}" />
+									<application
+										name="${project.name}"
+										mainclass="org.micoli.phone.ccphoneUI.TestFrame" />
+									<resources>
+										<fileset
+											dir="${project.build.directory}"
+											includes="*.jar" />
+										<fileset
+											dir="${project.build.directory}/dependency"
+											includes="*.jar" />
+									</resources>
+									<platform javafx="2.0">
+										<jvmarg value="-Xms64m" />
+										<jvmarg value="-Xmx256m" />
+									</platform>
+								</jfxdeploy>
+								<jfxsignjar
+									destdir="${project.build.directory}/deploy"
+									keystore="${project.basedir}/src/main/java/jnlp/keystore.jks"
+									storepass="micoli"
+									alias="signFiles"
+									keypass="micoli"
+								>
+									<fileset
+										dir="${project.build.directory}/deploy"
+										includes="*.jar" />
+								</jfxsignjar>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.oracle.javafx</groupId>
+						<artifactId>ant-javafx</artifactId>
+						<version>2.0</version>
+						<systemPath>${ant.javafx.jar}</systemPath>
+						<scope>system</scope>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

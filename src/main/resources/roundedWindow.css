@@ -1,0 +1,40 @@
+.roundedSmallWindow{
+-fx-border-insets: 16;
+-fx-background-insets: 16;
+-fx-background-radius: 7;
+-fx-border-radius: 7;
+-fx-border-color: gray;
+-fx-border-style: solid;
+-fx-border-width: 1;
+-fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);
+-fx-background-color:rgba(25, 25, 25, 0.9) ;
+}
+
+.roundedWindow{
+-fx-border-insets: 23;
+-fx-background-insets: 23;
+-fx-background-radius: 16;
+-fx-border-radius: 16;
+-fx-border-color: gray;
+-fx-border-style: solid;
+-fx-border-width: 1;
+-fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);
+-fx-background-color:rgba(25, 25, 25, 0.9) ;
+}
+
+.roundedButton{
+-fx-background-radius: 9;
+-fx-border-radius: 9;
+-fx-border-color: gray;
+-fx-border-style: solid;
+-fx-border-width: 1;
+}
+.colorRed{
+-fx-background-color:rgba(225, 25, 25, 0.8) ;
+-fx-border-color:rgba(200, 25, 25, 0.8)
+}
+.colorGreen{
+-fx-background-color:rgba(25, 225, 25, 0.8) ;
+-fx-border-color:rgba(25, 200, 25, 0.8)
+}
+
