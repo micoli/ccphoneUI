@@ -3,6 +3,7 @@ package org.micoli.phone.ccphoneUI;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.Date;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -10,7 +11,14 @@ import javafx.stage.Stage;
 
 import javax.swing.SwingUtilities;
 
+import org.vertx.java.core.Handler;
+import org.vertx.java.core.Vertx;
+import org.vertx.java.core.eventbus.Message;
+import org.vertx.java.core.json.JsonObject;
+
 public class Main {
+	static String topicAddress = "topic";
+	static Vertx vertx;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -18,6 +26,12 @@ public class Main {
 				initAndShowGUI();
 			}
 		});
+		Thread thread = new Thread(new Runnable() {
+			public void run() {
+				vertxClient();
+			}
+		});
+		thread.start();
 	}
 
 	private static void initAndShowGUI() {
@@ -60,6 +74,45 @@ public class Main {
 				System.out.println("Unable to add system tray icons");
 			} catch (java.awt.AWTException e) {
 				System.out.println("Unable to add system tray icons");
+			}
+		}
+	}
+	private static void vertxClient(){
+		vertx = Vertx.newVertx(2551, "localhost");
+		System.out.println("start vertx client");
+
+		Handler<Message<JsonObject>> myHandler = new Handler<Message<JsonObject>>() {
+			public void handle(Message<JsonObject> message) {
+				System.out.println("Client event due to registration : ["+message.body.getString("text") +"]\n"
+						+ message.body.toString());// + " "+ event.replyAddress);
+			}
+		};
+
+		vertx.eventBus().registerHandler(topicAddress, myHandler);
+
+		Thread thread = new Thread(new Runnable() {
+			public void run() {
+			}
+		});
+		thread.start();
+
+		while (true) {
+			try {
+				Thread.sleep(10000);
+				vertx.eventBus().publish(
+						topicAddress,
+						new JsonObject()
+								.putString("type", "publish")
+								.putString("adress", topicAddress)
+								.putObject(
+										"body",
+										new JsonObject().putString(
+												"text",
+												"ping "+ (new Date()).toString())
+										)
+								);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
