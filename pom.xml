@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<!-- mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main -->
-=======
 <project
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -11,7 +6,6 @@
 <!--
 mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 -->
->>>>>>> branch 'master' of https://github.com/micoli/ccphoneUI.git
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.micoli.phone</groupId>
 	<artifactId>ccphoneUI</artifactId>
@@ -24,11 +18,7 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 		<ant.javafx.jar>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/lib/ant-javafx.jar</ant.javafx.jar>
 	</properties>
 	<dependencies>
-<<<<<<< HEAD
-		<dependency>
-=======
 	<dependency>
->>>>>>> branch 'master' of https://github.com/micoli/ccphoneUI.git
 			<groupId>org.vert-x</groupId>
 			<artifactId>vertx-core</artifactId>
 			<version>1.2.3.final</version>
