@@ -4,6 +4,7 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -17,8 +18,9 @@ import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
 
 public class Main {
-	static String topicAddress = "topic";
+	static String topicAddress = "calls";
 	static Vertx vertx;
+	static HashMap<String,CallUI> calls;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -43,29 +45,21 @@ public class Main {
 						TestFrame mainJFX = new TestFrame();
 						Stage stage1 = new Stage();
 						mainJFX.start(stage1);
-						AnswerFrame answerJFX = new AnswerFrame();
-						Stage stage2 = new Stage();
-						answerJFX.start(stage2);
 					}
 				});
 			}
 		});
-		// This method is invoked on the EDT thread
-		/*JFrame frame = new JFrame("Swing and JavaFX");
-		final JFXPanel fxPanel = new JFXPanel();
-		frame.add(fxPanel);
-		frame.setSize(300, 200);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+		HashMap<String,CallUI> calls = new HashMap<String,CallUI>();
+
 		SystemTray st;
-		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray.getSystemTray() : null;
+		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray
+				.getSystemTray() : null;
 		if (st != null && st.getTrayIcons().length == 0) {
-			// final String imageName = st.getTrayIconSize().width > 16 ?
-			// st.getTrayIconSize().width > 64 ? "128" : "64" : "16";
 			try {
-				URL url = new URL("http://www.veryicon.com/icon/16/System/Palm/Settings%20Phone.png");
-				final java.awt.Image image = Toolkit.getDefaultToolkit().getImage(url);
-				;
+				URL url = new URL(
+						"http://www.veryicon.com/icon/16/System/Palm/Settings%20Phone.png");
+				final java.awt.Image image = Toolkit.getDefaultToolkit()
+						.getImage(url);
 				final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image);
 				// UGateKeeper.DEFAULT.
 				trayIcon.setToolTip("UGate");
@@ -77,14 +71,45 @@ public class Main {
 			}
 		}
 	}
-	private static void vertxClient(){
+
+	private static CallUI getCallUI(String callId){
+		CallUI callUI;
+		if(calls.containsKey(callId)){
+			callUI= new CallUI();
+			calls.put(callId,callUI);
+		}else{
+			callUI = calls.get(callId);
+		}
+		return callUI;
+	}
+
+	private static void vertxClient() {
 		vertx = Vertx.newVertx(2551, "localhost");
 		System.out.println("start vertx client");
 
 		Handler<Message<JsonObject>> myHandler = new Handler<Message<JsonObject>>() {
 			public void handle(Message<JsonObject> message) {
-				System.out.println("Client event due to registration : ["+message.body.getString("text") +"]\n"
-						+ message.body.toString());// + " "+ event.replyAddress);
+				String callId = message.body.getString("callid") ;
+				String eventName = message.body.getString("eventName");
+				CallUI callUI = null;;
+
+				System.out.println("Client event due to registration : ["
+						+ message.body.getString("text") + "]\n"
+						+ message.body.toString());
+
+				System.out.println("------");
+				if(callId != null){
+					System.out.println("addddddd");
+					callUI = getCallUI(callId);
+				}
+				if(eventName.equalsIgnoreCase("setSipRequest")){
+					// Ext.getCmp('txtsipcallid').setValue(msg.callId);
+				}else if(eventName.equalsIgnoreCase("incomingCall")){
+					callUI.displayAnswerFrame();
+					// Ext.getCmp('txtsipcallid').setValue(msg.callId);
+					// Ext.getCmp('txtsipcallidanswer').setValue(msg.callId)
+					// Ext.getCmp('txtsipcallidbusy').setValue(msg.callId)
+				}
 			}
 		};
 
@@ -108,9 +133,9 @@ public class Main {
 										"body",
 										new JsonObject().putString(
 												"text",
-												"ping "+ (new Date()).toString())
-										)
-								);
+												"ping "
+														+ (new Date())
+																.toString())));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
