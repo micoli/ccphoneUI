@@ -87,6 +87,14 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<executable>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/bin/javac</executable>
+					<fork>true</fork>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

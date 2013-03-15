@@ -4,6 +4,7 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -11,14 +12,11 @@ import javafx.stage.Stage;
 
 import javax.swing.SwingUtilities;
 
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.eventbus.Message;
+import org.micoli.phone.ccphoneUI.remote.VertX;
 import org.vertx.java.core.json.JsonObject;
 
 public class Main {
-	static String topicAddress = "topic";
-	static Vertx vertx;
+	static HashMap<String,CallUI> calls;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -28,6 +26,9 @@ public class Main {
 		});
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
+				calls = new HashMap<String, CallUI>();
+				VertX.init();
+				VertX.run();
 				vertxClient();
 			}
 		});
@@ -43,31 +44,19 @@ public class Main {
 						TestFrame mainJFX = new TestFrame();
 						Stage stage1 = new Stage();
 						mainJFX.start(stage1);
-						AnswerFrame answerJFX = new AnswerFrame();
-						Stage stage2 = new Stage();
-						answerJFX.start(stage2);
 					}
 				});
 			}
 		});
-		// This method is invoked on the EDT thread
-		/*JFrame frame = new JFrame("Swing and JavaFX");
-		final JFXPanel fxPanel = new JFXPanel();
-		frame.add(fxPanel);
-		frame.setSize(300, 200);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+
 		SystemTray st;
-		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray.getSystemTray() : null;
+		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray
+				.getSystemTray() : null;
 		if (st != null && st.getTrayIcons().length == 0) {
-			// final String imageName = st.getTrayIconSize().width > 16 ?
-			// st.getTrayIconSize().width > 64 ? "128" : "64" : "16";
 			try {
 				URL url = new URL("http://www.veryicon.com/icon/16/System/Palm/Settings%20Phone.png");
 				final java.awt.Image image = Toolkit.getDefaultToolkit().getImage(url);
-				;
 				final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image);
-				// UGateKeeper.DEFAULT.
 				trayIcon.setToolTip("UGate");
 				st.add(trayIcon);
 			} catch (final java.io.IOException e) {
@@ -77,18 +66,19 @@ public class Main {
 			}
 		}
 	}
-	private static void vertxClient(){
-		vertx = Vertx.newVertx(2551, "localhost");
-		System.out.println("start vertx client");
 
-		Handler<Message<JsonObject>> myHandler = new Handler<Message<JsonObject>>() {
-			public void handle(Message<JsonObject> message) {
-				System.out.println("Client event due to registration : ["+message.body.getString("text") +"]\n"
-						+ message.body.toString());// + " "+ event.replyAddress);
-			}
-		};
+	public static CallUI getCallUI(String callId) {
+		CallUI callUI;
+		if(calls.containsKey(callId)){
+			callUI = calls.get(callId);
+		} else {
+			callUI = new CallUI(callId);
+			calls.put(callId,callUI);
+		}
+		return callUI;
+	}
 
-		vertx.eventBus().registerHandler(topicAddress, myHandler);
+	private static void vertxClient() {
 
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
@@ -99,18 +89,12 @@ public class Main {
 		while (true) {
 			try {
 				Thread.sleep(10000);
-				vertx.eventBus().publish(
-						topicAddress,
+				VertX.eb.publish(VertX.topicAddress,
 						new JsonObject()
-								.putString("type", "publish")
-								.putString("adress", topicAddress)
-								.putObject(
+.putString("type", "publish").putString("adress", VertX.topicAddress).putObject(
 										"body",
 										new JsonObject().putString(
-												"text",
-												"ping "+ (new Date()).toString())
-										)
-								);
+"text", "ping " + (new Date()).toString())));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
