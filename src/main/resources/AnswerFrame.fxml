@@ -10,7 +10,7 @@
 <?import javafx.scene.text.*?>
 <!-- <?scenebuilder-preview-i18n-resource strings_fr.properties?> -->
 
-<BorderPane fx:id="root" cache="true" cacheHint="SPEED" mouseTransparent="false" prefHeight="200.0" prefWidth="600.0" styleClass="roundedWindow" xmlns:fx="http://javafx.com/fxml">
+<BorderPane cache="true" cacheHint="SPEED" mouseTransparent="false" prefHeight="200.0" prefWidth="600.0" styleClass="roundedWindow" xmlns:fx="http://javafx.com/fxml">
 <center>
 	<VBox prefHeight="200.0" prefWidth="100.0">
 	<children>
@@ -23,7 +23,7 @@
 			</ImageView>
 			<VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="434.0">
 			<children>
-				<Label id="callerNum" text=".....">
+				<Label fx:id="callerNum" text=".....">
 				<font>
 					<Font name="System Bold" size="20.0"/>
 				</font>
@@ -34,7 +34,7 @@
 					<Insets bottom="5.0" top="5.0" />
 				</VBox.margin>
 				</Label>
-				<Label id="callerId" font="$x1" text="....." textFill="$x2" VBox.margin="$x3" />
+				<Label fx:id="callerId" font="$x1" text="....." textFill="$x2" VBox.margin="$x3" />
 			</children>
 			</VBox>
 		</children>
@@ -44,7 +44,7 @@
 		</HBox>
 		<TilePane alignment="CENTER" hgap="20.0" prefHeight="-1.0" prefWidth="-1.0" tileAlignment="CENTER" vgap="30.0">
 		<children>
-			<Button id="answerButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="roundedButton, colorGreen" text="answer" textAlignment="CENTER">
+			<Button fx:id="answerButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="roundedButton, colorGreen" text="answer" textAlignment="CENTER">
 			<font>
 				<Font name="System Bold" size="16.0" />
 			</font>
@@ -52,7 +52,7 @@
 				<Color blue="0.250" green="0.250" red="0.250"  />
 			</textFill>
 			</Button>
-			<Button id="declineButton" font="$x4" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="roundedButton, colorRed" text="decline" textAlignment="CENTER" textFill="$x5" />
+			<Button fx:id="declineButton" font="$x4" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="roundedButton, colorRed" text="decline" textAlignment="CENTER" textFill="$x5" />
 		</children>
 		</TilePane>
 	</children>
