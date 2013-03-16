@@ -19,8 +19,8 @@ public class CallUI {
 				AnswerFrame answerJFX = new AnswerFrame();
 				Stage stage = new Stage();
 				answerJFX.start(stage);
-				answerJFX.callerNum.setText("message.body.getString(callId)");
-				answerJFX.callerId.setText("message.body.getString(fromValue)");
+				answerJFX.callerNum.setText(message.body.getString("callId"));
+				answerJFX.callerId.setText(message.body.getString("fromValue"));
 			}
 		});
 	}

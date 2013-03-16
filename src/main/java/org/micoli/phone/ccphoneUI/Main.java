@@ -69,9 +69,12 @@ public class Main {
 
 	public static CallUI getCallUI(String callId) {
 		CallUI callUI;
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		if(calls.containsKey(callId)){
+			System.out.println("get one");
 			callUI = calls.get(callId);
 		} else {
+			System.out.println("create new");
 			callUI = new CallUI(callId);
 			calls.put(callId,callUI);
 		}
