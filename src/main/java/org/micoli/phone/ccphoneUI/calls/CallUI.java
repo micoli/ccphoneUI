@@ -1,7 +1,9 @@
 package org.micoli.phone.ccphoneUI.calls;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import org.micoli.phone.ccphoneUI.remote.VertX;
+import org.micoli.phone.ccphoneUI.tools.FxTools;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
 
@@ -23,12 +26,15 @@ public class CallUI extends Application implements Initializable {
 	InCallFrame inCallFrame;
 	Pane root;
 	Stage primaryStage;
+	HashMap<String, CallUI> calls;
+
 
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
-	public CallUI(String CallID) {
+	public CallUI(String CallID, HashMap<String, CallUI> calls) {
 		this.CallID = CallID;
+		this.calls = calls;
 	}
 
 	@Override
@@ -53,10 +59,23 @@ public class CallUI extends Application implements Initializable {
 	}
 
 	public void dispatchMessage(String eventName, Message<JsonObject> message) {
-		if (eventName.equalsIgnoreCase("setSipRequest")) {
-			// displayInCallFrame(message);
+		if (eventName.equalsIgnoreCase("ringing")) {
+			displayInCallFrame(message);
+		} else if (eventName.equalsIgnoreCase("calleePickup")) {
+			displayInCallFrame(message);
 		} else if (eventName.equalsIgnoreCase("incomingCall")) {
 			displayAnswerFrame(message);
+		} else if (eventName.equalsIgnoreCase("remoteHangup")) {
+			try {
+				FxTools.runAndWait(new Runnable() {
+					public void run() {
+						primaryStage.close();
+					}
+				});
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
+			calls.remove(this.CallID);
 		}
 	}
 
@@ -64,7 +83,7 @@ public class CallUI extends Application implements Initializable {
 		VertX.publishDaemon("pickupAction", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("answer");
 		primaryStage.close();
-		displayInCallFrame();
+		displayInCallFrame(null);
 	}
 
 	public void declinedClicked(ActionEvent event) {
@@ -83,8 +102,8 @@ public class CallUI extends Application implements Initializable {
 		});
 	}
 
-	public void displayInCallFrame() {
-		final String callId = this.CallID;
+	public void displayInCallFrame(Message<JsonObject> message) {
+		final String callId = message==null?this.CallID:message.body.getString("callId");
 		setInCallFrame();
 		Platform.runLater(new Runnable() {
 			public void run() {

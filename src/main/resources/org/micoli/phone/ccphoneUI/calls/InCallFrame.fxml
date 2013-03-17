@@ -13,34 +13,43 @@
 <BorderPane cache="true" cacheHint="SPEED" mouseTransparent="false" prefHeight="200.0" prefWidth="600.0" styleClass="roundedWindow" xmlns:fx="http://javafx.com/fxml">
 <center>
 	<VBox prefHeight="200.0" prefWidth="100.0">
-	  <children>
+		<children>
 		<HBox prefHeight="49.0" prefWidth="552.0">
-		  <children>
-			<ImageView id="caller_pic" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-			  <HBox.margin>
-				<Insets left="10.0" right="20.0" />
-			  </HBox.margin>
-			</ImageView>
-			<VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="434.0">
-			  <children>
-				<Label fx:id="callerId" text="....." textFill="#9f9f9f">
-				  <font>
-					<Font size="13.0" fx:id="x1" />
-				  </font>
+			<children>
+				<VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="434.0">
+				<children>
+				<ImageView id="caller_pic" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+					<HBox.margin>
+					<Insets left="10.0" right="20.0" />
+					</HBox.margin>
+				</ImageView>
+				<Label fx:id="timer" text="....." textFill="#9f9f9f">
+					<font>
+					<Font size="12.0" fx:id="x1" />
+					</font>
 				</Label>
-			  </children>
+				</children>
 			</VBox>
-		  </children>
-		  <padding>
+			<VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="434.0">
+				<children>
+				<Label fx:id="callerId" text="....." textFill="#9f9f9f">
+					<font>
+					<Font size="13.0" fx:id="x1" />
+					</font>
+				</Label>
+				</children>
+			</VBox>
+			</children>
+			<padding>
 			<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-		  </padding>
+			</padding>
 		</HBox>
 		<TilePane alignment="CENTER" hgap="20.0" prefHeight="-1.0" prefWidth="-1.0" tileAlignment="CENTER" vgap="30.0">
-		  <children>
+			<children>
 			<Button fx:id="hangupButton" font="$x1" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="roundedButton, colorRed" text="hagnup" textAlignment="CENTER" textFill="BLACK" />
-		  </children>
+			</children>
 		</TilePane>
-	  </children>
+		</children>
 	</VBox>
 </center>
 <stylesheets>
