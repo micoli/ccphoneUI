@@ -28,7 +28,7 @@ public class FxTools {
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setOpacity(0.9f);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		DraggableWindow.makeDraggableTop(primaryStage, primaryStage.getScene().getRoot(), Constraint);
 	}
@@ -40,9 +40,9 @@ public class FxTools {
 	/**
 	 * Invokes a Runnable in JFX Thread and waits while it's finished. Like
 	 * SwingUtilities.invokeAndWait does for EDT.
-	 * 
+	 *
 	 * from http://www.guigarage.com/2013/01/invokeandwait-for-javafx/
-	 * 
+	 *
 	 * @param run
 	 *            The Runnable that has to be called on JFX thread.
 	 * @throws InterruptedException

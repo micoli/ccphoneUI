@@ -23,6 +23,9 @@ public class InCallFrame extends FXAutoScene {
 	private Button hangupButton;
 	public Timeline elapsedTimer;
 
+	public void stop(){
+		elapsedTimer.stop();
+	}
 	public InCallFrame(final CallUI me) {
 		super(me.primaryStage, DraggableWindow.CONSTRAINT_NONE);
 		hangupButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -32,13 +35,16 @@ public class InCallFrame extends FXAutoScene {
 		});
 	}
 
-	public void show(String callId) {
-		final Date startDate = new Date();
+	public FXAutoScene show(final String callId) {
+		final long startDate = new Date().getTime();
+		if(elapsedTimer!=null){
+			elapsedTimer.stop();
+		}
 		elapsedTimer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				long dif = (new Date()).getTime()-startDate.getTime();
+				long dif = (new Date()).getTime()-startDate;
 				timer.setText(String.format("%d",dif/1000));
-				System.out.println(String.format("%d",dif/1000));
+				System.out.println(String.format("%s %d %s %d",callId,Thread.currentThread().getId(),Thread.currentThread().getName(), dif/1000));
 			}
 		}));
 		elapsedTimer.setCycleCount(Timeline.INDEFINITE);
@@ -46,5 +52,6 @@ public class InCallFrame extends FXAutoScene {
 		callerId.setText(callId);
 		switchScene(primaryStage);
 		primaryStage.show();
+		return this;
 	}
 }

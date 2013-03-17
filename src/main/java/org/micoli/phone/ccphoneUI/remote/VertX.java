@@ -29,6 +29,7 @@ public class VertX {
 				String callId = message.body.getString("callId");
 				String eventName = message.body.getString("eventName");
 				if (eventName == null) {
+					Main.cleanUpCalls();
 					return;
 				}
 				System.out.println("Client event due to registration : [" + message.body.getString("text") + "]\n" + message.body.toString());

@@ -33,12 +33,13 @@ public class AnswerFrame extends FXAutoScene {
 		});
 	}
 
-	public void show(String callId, String fromValue) {
+	public FXAutoScene show(String callId, String fromValue) {
 		callerId.setText(callId);
 		callerNum.setText(fromValue);
 
 		switchScene(primaryStage);
 		primaryStage.show();
+		return this;
 	}
 
 	public void disableButtons() {
