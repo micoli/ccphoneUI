@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" cache="true" cacheHint="SPEED" mouseTransparent="false" prefHeight="80.0" prefWidth="480.0" styleClass="roundedSmallWindow" xmlns:fx="http://javafx.com/fxml">
+<left>
+	<TextField fx:id="number" alignment="CENTER" prefHeight="-1.0" prefWidth="140.0" text="01234567" BorderPane.alignment="CENTER">
+	<BorderPane.margin>
+		<Insets left="10.0" />
+	</BorderPane.margin>
+	</TextField>
+</left>
+<stylesheets>
+	<URL value="@css/roundedWindow.css" />
+</stylesheets>
+</BorderPane>

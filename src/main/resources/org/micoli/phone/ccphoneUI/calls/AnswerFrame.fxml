@@ -59,6 +59,6 @@
 	</VBox>
 </center>
 <stylesheets>
-	<URL value="@roundedWindow.css" />
+	<URL value="@../css/roundedWindow.css" />
 </stylesheets>
 </BorderPane>

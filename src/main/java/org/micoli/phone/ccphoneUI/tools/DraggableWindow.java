@@ -1,4 +1,5 @@
-package org.micoli.phone.ccphoneUI;
+package org.micoli.phone.ccphoneUI.tools;
+
 
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;

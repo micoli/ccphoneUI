@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -12,7 +13,9 @@ import javafx.stage.Stage;
 
 import javax.swing.SwingUtilities;
 
+import org.micoli.phone.ccphoneUI.calls.CallUI;
 import org.micoli.phone.ccphoneUI.remote.VertX;
+import org.micoli.phone.ccphoneUI.tools.FxTools;
 import org.vertx.java.core.json.JsonObject;
 
 public class Main {
@@ -41,17 +44,15 @@ public class Main {
 				new JFXPanel();
 				Platform.runLater(new Runnable() {
 					public void run() {
-						TestFrame mainJFX = new TestFrame();
-						Stage stage1 = new Stage();
-						mainJFX.start(stage1);
+						MainTop mainTop = new MainTop();
+						mainTop.show(new Stage());
 					}
 				});
 			}
 		});
 
 		SystemTray st;
-		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray
-				.getSystemTray() : null;
+		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray.getSystemTray() : null;
 		if (st != null && st.getTrayIcons().length == 0) {
 			try {
 				URL url = new URL("http://www.veryicon.com/icon/16/System/Palm/Settings%20Phone.png");
@@ -67,22 +68,32 @@ public class Main {
 		}
 	}
 
-	public static CallUI getCallUI(String callId) {
-		CallUI callUI;
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+	public static CallUI getCallUI(final String callId) {
 		if(calls.containsKey(callId)){
-			System.out.println("get one");
-			callUI = calls.get(callId);
+			return calls.get(callId);
 		} else {
-			System.out.println("create new");
-			callUI = new CallUI(callId);
-			calls.put(callId,callUI);
+			final CallUI callUI = new CallUI(callId);
+			calls.put(callId, callUI);
+			try {
+				FxTools.runAndWait(new Runnable() {
+					public void run() {
+						try {
+							callUI.start(new Stage());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			return callUI;
 		}
-		return callUI;
 	}
 
 	private static void vertxClient() {
-
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
 			}
@@ -92,9 +103,9 @@ public class Main {
 		while (true) {
 			try {
 				Thread.sleep(10000);
-				VertX.eb.publish(VertX.topicAddress,
+				VertX.eb.publish(VertX.guiEventAddress,
 						new JsonObject()
-.putString("type", "publish").putString("adress", VertX.topicAddress).putObject(
+.putString("type", "publish").putString("adress", VertX.guiEventAddress).putObject(
 										"body",
 										new JsonObject().putString(
 "text", "ping " + (new Date()).toString())));

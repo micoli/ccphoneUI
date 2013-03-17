@@ -1,4 +1,4 @@
-package org.micoli.phone.ccphoneUI;
+package org.micoli.phone.ccphoneUI.tools;
 
 public class Delta {
 	public double x;
