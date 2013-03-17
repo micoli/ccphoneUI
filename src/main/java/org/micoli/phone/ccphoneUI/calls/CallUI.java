@@ -53,8 +53,10 @@ public class CallUI extends Application implements Initializable {
 	}
 
 	public void dispatchMessage(String eventName, Message<JsonObject> message) {
-		if (eventName.equalsIgnoreCase("setSipRequest")) {
-			// displayInCallFrame(message);
+		if (eventName.equalsIgnoreCase("ringing")) {
+			displayInCallFrame(message);
+		} else if (eventName.equalsIgnoreCase("calleePickup")) {
+			displayInCallFrame(message);
 		} else if (eventName.equalsIgnoreCase("incomingCall")) {
 			displayAnswerFrame(message);
 		}
@@ -64,7 +66,7 @@ public class CallUI extends Application implements Initializable {
 		VertX.publishDaemon("pickupAction", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("answer");
 		primaryStage.close();
-		displayInCallFrame();
+		displayInCallFrame(null);
 	}
 
 	public void declinedClicked(ActionEvent event) {
@@ -83,8 +85,8 @@ public class CallUI extends Application implements Initializable {
 		});
 	}
 
-	public void displayInCallFrame() {
-		final String callId = this.CallID;
+	public void displayInCallFrame(Message<JsonObject> message) {
+		final String callId = message==null?this.CallID:message.body.getString("callId");
 		setInCallFrame();
 		Platform.runLater(new Runnable() {
 			public void run() {

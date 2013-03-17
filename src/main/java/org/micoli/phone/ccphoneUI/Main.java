@@ -55,13 +55,11 @@ public class Main {
 		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray.getSystemTray() : null;
 		if (st != null && st.getTrayIcons().length == 0) {
 			try {
-				URL url = new URL("http://www.veryicon.com/icon/16/System/Palm/Settings%20Phone.png");
-				final java.awt.Image image = Toolkit.getDefaultToolkit().getImage(url);
-				final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image);
-				trayIcon.setToolTip("UGate");
+				URL url = Main.class.getResource("/org/micoli/phone/phone-icon-blue.png");
+				//final java.awt.Image image = Toolkit.getDefaultToolkit().getImage(url);
+				final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(Toolkit.getDefaultToolkit().getImage(url));
+				trayIcon.setToolTip("ccPhoneUI");
 				st.add(trayIcon);
-			} catch (final java.io.IOException e) {
-				System.out.println("Unable to add system tray icons");
 			} catch (java.awt.AWTException e) {
 				System.out.println("Unable to add system tray icons");
 			}
