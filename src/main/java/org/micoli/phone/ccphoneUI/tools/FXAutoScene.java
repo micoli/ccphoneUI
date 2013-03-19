@@ -31,6 +31,8 @@ public abstract class FXAutoScene {
 	}
 
 	public void switchScene(Stage primaryStage) {
+		System.out.println(">>>>>>>>>>>>>>>>>" + fxmlDocument);
+		//root.getTransforms().add( new Rotate(10,Rotate.Y_AXIS));
 		primaryStage.getScene().setFill(Color.TRANSPARENT);
 		primaryStage.getScene().setRoot(root);
 		primaryStage.sizeToScene();

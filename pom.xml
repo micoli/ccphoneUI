@@ -131,7 +131,7 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 									outdir="${project.build.directory}/deploy" outfile="${project.build.finalName}">
 									<info title="${project.name}" />
 									<application name="${project.name}"
-										mainclass="org.micoli.phone.ccphoneUI.TestFrame" />
+										mainclass="org.micoli.phone.ccphoneUI.MainTop" />
 									<resources>
 										<fileset dir="${project.build.directory}" includes="*.jar" />
 										<fileset dir="${project.build.directory}/dependency"

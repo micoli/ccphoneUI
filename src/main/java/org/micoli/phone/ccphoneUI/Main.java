@@ -5,6 +5,8 @@ import java.awt.Toolkit;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import javafx.application.Platform;
@@ -19,7 +21,7 @@ import org.micoli.phone.ccphoneUI.tools.FxTools;
 import org.vertx.java.core.json.JsonObject;
 
 public class Main {
-	static HashMap<String,CallUI> calls;
+	private static HashMap<String, CallUI> calls;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -29,7 +31,7 @@ public class Main {
 		});
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
-				calls = new HashMap<String, CallUI>();
+				setCalls(new HashMap<String, CallUI>());
 				VertX.init();
 				VertX.run();
 				vertxClient();
@@ -52,11 +54,11 @@ public class Main {
 		});
 
 		SystemTray st;
-		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray.getSystemTray() : null;
+		st = java.awt.SystemTray.isSupported() ? java.awt.SystemTray
+				.getSystemTray() : null;
 		if (st != null && st.getTrayIcons().length == 0) {
 			try {
 				URL url = Main.class.getResource("/org/micoli/phone/phone-icon-blue.png");
-				//final java.awt.Image image = Toolkit.getDefaultToolkit().getImage(url);
 				final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(Toolkit.getDefaultToolkit().getImage(url));
 				trayIcon.setToolTip("ccPhoneUI");
 				st.add(trayIcon);
@@ -67,11 +69,11 @@ public class Main {
 	}
 
 	public static CallUI getCallUI(final String callId) {
-		if(calls.containsKey(callId)){
-			return calls.get(callId);
+		if (getCalls().containsKey(callId)) {
+			return getCalls().get(callId);
 		} else {
-			final CallUI callUI = new CallUI(callId,calls);
-			calls.put(callId, callUI);
+			final CallUI callUI = new CallUI(callId, getCalls());
+			getCalls().put(callId, callUI);
 			try {
 				FxTools.runAndWait(new Runnable() {
 					public void run() {
@@ -91,6 +93,25 @@ public class Main {
 		}
 	}
 
+	public static HashMap<String, CallUI> getCalls() {
+		return calls;
+	}
+
+	public static void setCalls(HashMap<String, CallUI> calls) {
+		Main.calls = calls;
+	}
+
+	public static void cleanUpCalls() {
+		Iterator<Entry<String, CallUI>> iter = calls.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, CallUI> entry = iter.next();
+			if(!entry.getValue().isActive()){
+				iter.remove();
+			}
+		}
+		//System.out.println(String.format("ALL %d %s",Main.getCalls().size(),Main.getCalls().entrySet().toString()));
+	}
+
 	private static void vertxClient() {
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
@@ -101,12 +122,18 @@ public class Main {
 		while (true) {
 			try {
 				Thread.sleep(10000);
-				VertX.eb.publish(VertX.guiEventAddress,
+				VertX.eb.publish(
+						VertX.guiEventAddress,
 						new JsonObject()
-.putString("type", "publish").putString("adress", VertX.guiEventAddress).putObject(
+								.putString("type", "publish")
+								.putString("adress", VertX.guiEventAddress)
+								.putObject(
 										"body",
 										new JsonObject().putString(
-"text", "ping " + (new Date()).toString())));
+												"text",
+												"ping "
+														+ (new Date())
+																.toString())));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

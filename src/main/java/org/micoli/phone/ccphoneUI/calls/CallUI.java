@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import org.micoli.phone.ccphoneUI.remote.VertX;
+import org.micoli.phone.ccphoneUI.tools.FXAutoScene;
 import org.micoli.phone.ccphoneUI.tools.FxTools;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
@@ -26,7 +27,8 @@ public class CallUI extends Application implements Initializable {
 	InCallFrame inCallFrame;
 	Pane root;
 	Stage primaryStage;
-	HashMap<String, CallUI> calls;
+	private boolean isActive = true;
+	private FXAutoScene currentScene = null;
 
 
 	public void initialize(URL url, ResourceBundle rb) {
@@ -34,33 +36,53 @@ public class CallUI extends Application implements Initializable {
 
 	public CallUI(String CallID, HashMap<String, CallUI> calls) {
 		this.CallID = CallID;
-		this.calls = calls;
+	}
+
+	private void closeUI(){
+		if(inCallFrame!=null){
+			inCallFrame.stop();
+		}
+		primaryStage.close();
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		this.primaryStage = primaryStage;
+	public void start(Stage stage) throws Exception {
+		this.primaryStage = stage;
 		root = new Pane();
 		Scene appScene = new Scene(root);
 		primaryStage.setScene(appScene);
 		appScene.setFill(Color.TRANSPARENT);
 	}
 
-	private void setAnswerFrame() {
+	public boolean isActive() {
+		return isActive;
+	}
+
+	private void initAnswerFrame() {
 		if (answerFrame == null) {
 			answerFrame = new AnswerFrame(this);
 		}
 	}
 
-	private void setInCallFrame() {
+	private void initInCallFrame() {
 		if (inCallFrame == null) {
 			inCallFrame = new InCallFrame(this);
 		}
 	}
 
+	public FXAutoScene getCurrentScene() {
+		return currentScene;
+	}
+
+	public void setCurrentScene(FXAutoScene currentScene) {
+		this.currentScene = currentScene;
+	}
+
 	public void dispatchMessage(String eventName, Message<JsonObject> message) {
-		if (eventName.equalsIgnoreCase("ringing")) {
-			displayInCallFrame(message);
+		/*if (eventName.equalsIgnoreCase("ping")) {
+			System.out.println(String.format("ALL %d",calls.size()));
+		} else*/ if (eventName.equalsIgnoreCase("ringing")) {
+				displayInCallFrame(message);
 		} else if (eventName.equalsIgnoreCase("calleePickup")) {
 			displayInCallFrame(message);
 		} else if (eventName.equalsIgnoreCase("incomingCall")) {
@@ -69,45 +91,51 @@ public class CallUI extends Application implements Initializable {
 			try {
 				FxTools.runAndWait(new Runnable() {
 					public void run() {
-						primaryStage.close();
+						System.out.println(String.format("current THREAD %d", Thread.currentThread().getId()));
+						System.out.println("ask to quit");
+						closeUI();
+						Platform.exit();
 					}
 				});
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
-			calls.remove(this.CallID);
+			isActive = false;
+			//calls.remove(this.CallID);
 		}
 	}
 
 	public void answerClicked(ActionEvent event) {
 		VertX.publishDaemon("pickupAction", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("answer");
-		primaryStage.close();
+		closeUI();
 		displayInCallFrame(null);
 	}
 
 	public void declinedClicked(ActionEvent event) {
 		VertX.publishDaemon("busyHereAction", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("declined");
-		primaryStage.close();
+		closeUI();
 	}
 
 
 	public void displayAnswerFrame(final Message<JsonObject> message) {
-		setAnswerFrame();
+		initAnswerFrame();
 		Platform.runLater(new Runnable() {
 			public void run() {
-				answerFrame.show(message.body.getString("callId"), message.body.getString("fromValue"));
+				System.out.println(String.format("current THREAD %d", Thread.currentThread().getId()));
+				setCurrentScene(answerFrame.show(message.body.getString("callId"), message.body.getString("fromValue")));
 			}
 		});
 	}
 
 	public void displayInCallFrame(Message<JsonObject> message) {
 		final String callId = message==null?this.CallID:message.body.getString("callId");
-		setInCallFrame();
+		initInCallFrame();
 		Platform.runLater(new Runnable() {
 			public void run() {
-				inCallFrame.show(callId);
+				System.out.println(String.format("current THREAD %d", Thread.currentThread().getId()));
+				setCurrentScene(inCallFrame.show(callId));
 			}
 		});
 	}
@@ -115,6 +143,8 @@ public class CallUI extends Application implements Initializable {
 	public void hangupClicked(ActionEvent event) {
 		VertX.publishDaemon("hangupAction", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("hangup");
-		primaryStage.close();
+		setCurrentScene(null);
+		isActive = false;
+		closeUI();
 	}
 }
