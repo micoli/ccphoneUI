@@ -1,6 +1,6 @@
 .roundedSmallWindow{
--fx-border-insets: 16;
--fx-background-insets: 16;
+-fx-border-insets: 6;
+-fx-background-insets: 6;
 -fx-background-radius: 7;
 -fx-border-radius: 7;
 -fx-border-color: gray;
@@ -38,3 +38,18 @@
 -fx-border-color:rgba(25, 200, 25, 0.8)
 }
 
+
+
+.toggle-buttonMic {
+-fx-background-image: url('../images/microphone_green.png');
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+}
+
+.toggle-buttonMic:selected {
+-fx-background-image: url('../images/microphone_red.png');
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+}

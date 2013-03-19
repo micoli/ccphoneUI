@@ -4,17 +4,21 @@
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" cache="true" cacheHint="SPEED" mouseTransparent="false" prefHeight="80.0" prefWidth="480.0" styleClass="roundedSmallWindow" xmlns:fx="http://javafx.com/fxml">
-<left>
-	<TextField fx:id="number" alignment="CENTER" prefHeight="-1.0" prefWidth="140.0" text="01234567" BorderPane.alignment="CENTER">
-	<BorderPane.margin>
-		<Insets left="10.0" />
-	</BorderPane.margin>
-	</TextField>
-</left>
-<stylesheets>
-	<URL value="@css/roundedWindow.css" />
-</stylesheets>
+<BorderPane fx:id="root" cache="true" cacheHint="SPEED" mouseTransparent="false" prefHeight="46.0" prefWidth="380.0" styleClass="roundedSmallWindow" xmlns:fx="http://javafx.com/fxml">
+  <center>
+    <ToggleButton fx:id="microphone" ellipsisString="" minWidth="10.0" mnemonicParsing="false" prefWidth="26.0" style="" styleClass="toggle-buttonMic" text="" />
+  </center>
+  <left>
+    <TextField fx:id="number" alignment="CENTER" prefHeight="-1.0" prefWidth="140.0" style="-fx-text-fill:rgb(250,250,250);&#10;-fx-background-color:rgba(125,125,125,0.1);&#10;-fx-border-color:rgba(200,200,200,0.3);&#10;-fx-border-radius: 3;&#10;" text="" BorderPane.alignment="CENTER">
+      <BorderPane.margin>
+        <Insets left="10.0" />
+      </BorderPane.margin>
+    </TextField>
+  </left>
+  <stylesheets>
+    <URL value="@css/roundedWindow.css" />
+  </stylesheets>
 </BorderPane>
