@@ -3,9 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
-<!--
-mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
--->
+	<!-- mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.micoli.phone</groupId>
 	<artifactId>ccphoneUI</artifactId>
@@ -18,7 +16,12 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 		<ant.javafx.jar>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/lib/ant-javafx.jar</ant.javafx.jar>
 	</properties>
 	<dependencies>
-	<dependency>
+		<dependency>
+			<groupId>org.jnativehook</groupId>
+			<artifactId>jnativehook</artifactId>
+			<version>1.1.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.vert-x</groupId>
 			<artifactId>vertx-core</artifactId>
 			<version>1.2.3.final</version>
@@ -53,7 +56,6 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 			<systemPath>${fx.home}</systemPath>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -123,18 +125,30 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 						<phase>package</phase>
 						<configuration>
 							<target>
-								<taskdef name="jfxdeploy" classname="com.sun.javafx.tools.ant.DeployFXTask"
+								<taskdef
+									name="jfxdeploy"
+									classname="com.sun.javafx.tools.ant.DeployFXTask"
 									classpathref="maven.plugin.classpath" />
-								<taskdef name="jfxsignjar" classname="com.sun.javafx.tools.ant.FXSignJarTask"
+								<taskdef
+									name="jfxsignjar"
+									classname="com.sun.javafx.tools.ant.FXSignJarTask"
 									classpathref="maven.plugin.classpath" />
-								<jfxdeploy width="800" height="600"
-									outdir="${project.build.directory}/deploy" outfile="${project.build.finalName}">
+								<jfxdeploy
+									width="800"
+									height="600"
+									outdir="${project.build.directory}/deploy"
+									outfile="${project.build.finalName}"
+								>
 									<info title="${project.name}" />
-									<application name="${project.name}"
+									<application
+										name="${project.name}"
 										mainclass="org.micoli.phone.ccphoneUI.MainTop" />
 									<resources>
-										<fileset dir="${project.build.directory}" includes="*.jar" />
-										<fileset dir="${project.build.directory}/dependency"
+										<fileset
+											dir="${project.build.directory}"
+											includes="*.jar" />
+										<fileset
+											dir="${project.build.directory}/dependency"
 											includes="*.jar" />
 									</resources>
 									<platform javafx="2.0">
@@ -142,10 +156,15 @@ mvn clean package;java -cp "target/deploy/*" org.micoli.phone.ccphoneUI.Main
 										<jvmarg value="-Xmx256m" />
 									</platform>
 								</jfxdeploy>
-								<jfxsignjar destdir="${project.build.directory}/deploy"
+								<jfxsignjar
+									destdir="${project.build.directory}/deploy"
 									keystore="${project.basedir}/src/main/java/jnlp/keystore.jks"
-									storepass="micoli" alias="signFiles" keypass="micoli">
-									<fileset dir="${project.build.directory}/deploy"
+									storepass="micoli"
+									alias="signFiles"
+									keypass="micoli"
+								>
+									<fileset
+										dir="${project.build.directory}/deploy"
 										includes="*.jar" />
 								</jfxsignjar>
 							</target>

@@ -22,6 +22,7 @@ import org.vertx.java.core.json.JsonObject;
 
 public class Main {
 	private static HashMap<String, CallUI> calls;
+	static MainTop mainTop;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -46,7 +47,7 @@ public class Main {
 				new JFXPanel();
 				Platform.runLater(new Runnable() {
 					public void run() {
-						MainTop mainTop = new MainTop();
+						mainTop = new MainTop();
 						mainTop.show(new Stage());
 					}
 				});
@@ -58,7 +59,7 @@ public class Main {
 				.getSystemTray() : null;
 		if (st != null && st.getTrayIcons().length == 0) {
 			try {
-				URL url = Main.class.getResource("/org/micoli/phone/phone-icon-blue.png");
+				URL url = Main.class.getResource("/org/micoli/phone/ccphoneUI/images/phone-icon-blue.png");
 				final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(Toolkit.getDefaultToolkit().getImage(url));
 				trayIcon.setToolTip("ccPhoneUI");
 				st.add(trayIcon);
@@ -72,7 +73,7 @@ public class Main {
 		if (getCalls().containsKey(callId)) {
 			return getCalls().get(callId);
 		} else {
-			final CallUI callUI = new CallUI(callId, getCalls());
+			final CallUI callUI = new CallUI(callId, mainTop.getPrimaryStage());
 			getCalls().put(callId, callUI);
 			try {
 				FxTools.runAndWait(new Runnable() {
@@ -101,12 +102,16 @@ public class Main {
 		Main.calls = calls;
 	}
 
-	public static void cleanUpCalls() {
+	public static void manageCalls() {
+		int n = 0;
 		Iterator<Entry<String, CallUI>> iter = calls.entrySet().iterator();
 		while (iter.hasNext()) {
 			Entry<String, CallUI> entry = iter.next();
 			if(!entry.getValue().isActive()){
 				iter.remove();
+			} else {
+				entry.getValue().position(n);
+				n++;
 			}
 		}
 		//System.out.println(String.format("ALL %d %s",Main.getCalls().size(),Main.getCalls().entrySet().toString()));

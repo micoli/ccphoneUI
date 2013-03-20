@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+import org.micoli.phone.ccphoneUI.Main;
 import org.micoli.phone.ccphoneUI.tools.DraggableWindow;
 import org.micoli.phone.ccphoneUI.tools.FXAutoScene;
 
@@ -27,7 +28,7 @@ public class InCallFrame extends FXAutoScene {
 		elapsedTimer.stop();
 	}
 	public InCallFrame(final CallUI me) {
-		super(me.primaryStage, DraggableWindow.CONSTRAINT_NONE);
+		super(me.primaryStage, DraggableWindow.CONSTRAINT_NONE, false);
 		hangupButton.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				me.hangupClicked(event);
@@ -44,7 +45,8 @@ public class InCallFrame extends FXAutoScene {
 			public void handle(ActionEvent event) {
 				long dif = (new Date()).getTime()-startDate;
 				timer.setText(String.format("%d",dif/1000));
-				System.out.println(String.format("%s %d %s %d",callId,Thread.currentThread().getId(),Thread.currentThread().getName(), dif/1000));
+				// System.out.println(String.format("%s %d %s %d",callId,Thread.currentThread().getId(),Thread.currentThread().getName(),
+				// dif/1000));
 			}
 		}));
 		elapsedTimer.setCycleCount(Timeline.INDEFINITE);
@@ -52,6 +54,7 @@ public class InCallFrame extends FXAutoScene {
 		callerId.setText(callId);
 		switchScene(primaryStage);
 		primaryStage.show();
+		Main.manageCalls();
 		return this;
 	}
 }

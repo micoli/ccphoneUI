@@ -14,7 +14,7 @@ public class DraggableWindow {
 	public static void makeDraggableTop(final Stage stage, final Node byNode, final int constraint) {
 		final Delta dragDelta = new Delta();
 		if (constraint == CONSTRAINT_TOP) {
-			stage.setY(15);
+			stage.setY(25);
 		}
 		byNode.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
@@ -33,7 +33,7 @@ public class DraggableWindow {
 			public void handle(MouseEvent mouseEvent) {
 				stage.setX(mouseEvent.getScreenX() + dragDelta.x);
 				if (constraint == CONSTRAINT_TOP) {
-					stage.setY(5);
+					stage.setY(25);
 				}
 				if (constraint == CONSTRAINT_NONE) {
 					stage.setY(mouseEvent.getScreenY() + dragDelta.y);

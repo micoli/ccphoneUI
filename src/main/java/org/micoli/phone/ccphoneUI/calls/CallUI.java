@@ -1,7 +1,6 @@
 package org.micoli.phone.ccphoneUI.calls;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
@@ -27,6 +26,7 @@ public class CallUI extends Application implements Initializable {
 	InCallFrame inCallFrame;
 	Pane root;
 	Stage primaryStage;
+	Stage anchorStage;
 	private boolean isActive = true;
 	private FXAutoScene currentScene = null;
 
@@ -34,8 +34,9 @@ public class CallUI extends Application implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
-	public CallUI(String CallID, HashMap<String, CallUI> calls) {
+	public CallUI(String CallID, Stage anchor) {
 		this.CallID = CallID;
+		this.anchorStage = anchor;
 	}
 
 	private void closeUI(){
@@ -52,6 +53,11 @@ public class CallUI extends Application implements Initializable {
 		Scene appScene = new Scene(root);
 		primaryStage.setScene(appScene);
 		appScene.setFill(Color.TRANSPARENT);
+	}
+
+	public void position(int n) {
+		primaryStage.setX(anchorStage.getX() + anchorStage.getWidth() + (n * primaryStage.getWidth()));
+		primaryStage.setY(anchorStage.getY());
 	}
 
 	public boolean isActive() {

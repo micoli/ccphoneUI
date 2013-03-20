@@ -13,7 +13,13 @@ import javafx.stage.Stage;
 public abstract class FXAutoFrame extends Application implements Initializable {
 	protected String fxmlDocument;
 	protected Stage primaryStage;
+
+	public final Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
 	protected int constraintWindow;
+	protected boolean draggable;
 
 	public void initialize(URL url, ResourceBundle rb) {
 	}
@@ -35,7 +41,7 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 			fxmlLoader = new FXMLLoader(getClass().getResource(fxmlDocument));
 			fxmlLoader.setController(this);
 			root = (Pane) fxmlLoader.load();
-			FxTools.skinWindow(primaryStage, root, constraintWindow);
+			FxTools.skinWindow(primaryStage, root, constraintWindow, draggable);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

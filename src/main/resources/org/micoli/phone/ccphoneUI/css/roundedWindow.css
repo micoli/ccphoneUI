@@ -1,12 +1,12 @@
 .roundedSmallWindow{
--fx-border-insets: 6;
--fx-background-insets: 6;
--fx-background-radius: 7;
--fx-border-radius: 7;
+-fx-border-insets: 3;
+-fx-background-insets: 3;
+-fx-background-radius: 8;
+-fx-border-radius: 8;
 -fx-border-color: gray;
 -fx-border-style: solid;
 -fx-border-width: 1;
--fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);
+-fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.3, 0, 0);
 -fx-background-color:rgba(25, 25, 25, 0.9) ;
 }
 
@@ -29,16 +29,37 @@
 -fx-border-style: solid;
 -fx-border-width: 1;
 }
+
 .colorRed{
 -fx-background-color:rgba(225, 25, 25, 0.8) ;
 -fx-border-color:rgba(200, 25, 25, 0.8)
 }
+
 .colorGreen{
 -fx-background-color:rgba(25, 225, 25, 0.8) ;
 -fx-border-color:rgba(25, 200, 25, 0.8)
 }
 
+.graphicButton{
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-opacity:0.8;
+}
 
+.graphicButton:hover {
+-fx-opacity:1;
+/*-fx-background-position: 2,2;*/
+}
+
+.buttonAnswer {
+-fx-background-image: url('../images/phone_green.png');
+}
+
+.buttonHangup {
+-fx-background-image: url('../images/phone_red.png');
+}
 
 .toggle-buttonMic {
 -fx-background-image: url('../images/microphone_green.png');
@@ -52,4 +73,15 @@
 -fx-background-image: url('../images/microphone_red.png');
 -fx-background-color: transparent;
 -fx-border-color: transparent;
+}
+
+.toggle-buttonMic:hover {
+-fx-background-position: 1,0;
+}
+
+.blacktextfield{
+-fx-text-fill:rgba(250,250,250,1);
+-fx-background-color:rgba(0,0,0,0.1);
+-fx-border-color:rgba(230,230,230,0.3);
+-fx-border-radius: 3;
 }

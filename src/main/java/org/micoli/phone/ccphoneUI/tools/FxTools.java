@@ -14,23 +14,27 @@ import javafx.stage.StageStyle;
 
 
 public class FxTools {
-	public static void skinWindow(Stage primaryStage, Pane root, int Constraint) {
+	public static void skinWindow(Stage primaryStage, Pane root, int Constraint, boolean draggable) {
 		Scene mainScene = new Scene(root);
 		mainScene.setFill(Color.TRANSPARENT);
 		primaryStage.setScene(mainScene);
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
 		primaryStage.setOpacity(0.9f);
-		DraggableWindow.makeDraggableTop(primaryStage, root, Constraint);
+		if (draggable) {
+			DraggableWindow.makeDraggableTop(primaryStage, root, Constraint);
+		}
 	}
 
-	public static void skinWindow(Stage primaryStage, int Constraint) {
+	public static void skinWindow(Stage primaryStage, int Constraint, boolean draggable) {
 		try {
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setOpacity(0.9f);
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		DraggableWindow.makeDraggableTop(primaryStage, primaryStage.getScene().getRoot(), Constraint);
+		if (draggable) {
+			DraggableWindow.makeDraggableTop(primaryStage, primaryStage.getScene().getRoot(), Constraint);
+		}
 	}
 
 	private static class ThrowableWrapper {

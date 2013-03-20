@@ -9,13 +9,15 @@ import javafx.stage.Stage;
 
 public abstract class FXAutoScene {
 	protected String fxmlDocument;
+	protected boolean draggable;
 	public int constraintWindow;
 	public Pane root;
 	protected Stage primaryStage;
 
-	public FXAutoScene(Stage primaryStage, int constraintWindow) {
+	public FXAutoScene(Stage primaryStage, int constraintWindow, boolean draggable) {
 		this.primaryStage = primaryStage;
 		this.constraintWindow = constraintWindow;
+		this.draggable = draggable;
 		if (fxmlDocument == null) {
 			fxmlDocument = String.format("/%s.fxml", getClass().getCanonicalName().replace(".", "/"));
 		}
@@ -36,7 +38,7 @@ public abstract class FXAutoScene {
 		primaryStage.getScene().setFill(Color.TRANSPARENT);
 		primaryStage.getScene().setRoot(root);
 		primaryStage.sizeToScene();
-		FxTools.skinWindow(primaryStage, constraintWindow);
+		FxTools.skinWindow(primaryStage, constraintWindow, draggable);
 	}
 
 }
