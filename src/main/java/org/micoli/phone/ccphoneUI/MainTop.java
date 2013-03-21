@@ -16,17 +16,34 @@ import org.micoli.phone.ccphoneUI.tools.DraggableWindow;
 import org.micoli.phone.ccphoneUI.tools.FXAutoFrame;
 import org.vertx.java.core.json.JsonObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainTop.
+ */
 public class MainTop extends FXAutoFrame {
+
+	/** The number. */
 	@FXML
 	public TextField number;
+
+	/** The microphone. */
 	@FXML
 	public ToggleButton microphone;
 
+	/**
+	 * Instantiates a new main top.
+	 */
 	public MainTop() {
 		constraintWindow = DraggableWindow.CONSTRAINT_TOP;
 		draggable = false;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.micoli.phone.ccphoneUI.tools.FXAutoFrame#show(javafx.stage.Stage)
+	 */
 	public void show(Stage stage) {
 		start(stage);
 		makeDraggableTop(stage, stage.getScene().getRoot());
@@ -43,6 +60,14 @@ public class MainTop extends FXAutoFrame {
 		show();
 	}
 
+	/**
+	 * Make draggable top.
+	 * 
+	 * @param stage
+	 *            the stage
+	 * @param byNode
+	 *            the by node
+	 */
 	public static void makeDraggableTop(final Stage stage, final Node byNode) {
 		final Delta dragDelta = new Delta();
 		stage.setY(25);

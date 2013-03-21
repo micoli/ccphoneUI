@@ -10,25 +10,58 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FXAutoFrame.
+ */
 public abstract class FXAutoFrame extends Application implements Initializable {
+
+	/** The fxml document. */
 	protected String fxmlDocument;
+
+	/** The primary stage. */
 	protected Stage primaryStage;
 
+	/**
+	 * Gets the primary stage.
+	 * 
+	 * @return the primary stage
+	 */
 	public final Stage getPrimaryStage() {
 		return primaryStage;
 	}
 
+	/** The constraint window. */
 	protected int constraintWindow;
+
+	/** The draggable. */
 	protected boolean draggable;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
+	 * java.util.ResourceBundle)
+	 */
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
+	/**
+	 * Show.
+	 * 
+	 * @param stage
+	 *            the stage
+	 */
 	public void show(Stage stage) {
 		start(stage);
 		show();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	public void start(final Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		if (fxmlDocument == null) {
@@ -47,10 +80,16 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 		}
 	}
 
+	/**
+	 * Show.
+	 */
 	public void show() {
 		this.primaryStage.show();
 	}
 
+	/**
+	 * Close.
+	 */
 	public void close() {
 		this.primaryStage.close();
 	}

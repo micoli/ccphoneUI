@@ -12,8 +12,24 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FxTools.
+ */
 public class FxTools {
+
+	/**
+	 * Skin window.
+	 * 
+	 * @param primaryStage
+	 *            the primary stage
+	 * @param root
+	 *            the root
+	 * @param Constraint
+	 *            the constraint
+	 * @param draggable
+	 *            the draggable
+	 */
 	public static void skinWindow(Stage primaryStage, Pane root, int Constraint, boolean draggable) {
 		Scene mainScene = new Scene(root);
 		mainScene.setFill(Color.TRANSPARENT);
@@ -25,6 +41,16 @@ public class FxTools {
 		}
 	}
 
+	/**
+	 * Skin window.
+	 * 
+	 * @param primaryStage
+	 *            the primary stage
+	 * @param Constraint
+	 *            the constraint
+	 * @param draggable
+	 *            the draggable
+	 */
 	public static void skinWindow(Stage primaryStage, int Constraint, boolean draggable) {
 		try {
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -37,7 +63,12 @@ public class FxTools {
 		}
 	}
 
+	/**
+	 * The Class ThrowableWrapper.
+	 */
 	private static class ThrowableWrapper {
+
+		/** The t. */
 		Throwable t;
 	}
 

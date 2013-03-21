@@ -15,18 +15,40 @@ import org.micoli.phone.ccphoneUI.Main;
 import org.micoli.phone.ccphoneUI.tools.DraggableWindow;
 import org.micoli.phone.ccphoneUI.tools.FXAutoScene;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InCallFrame.
+ */
 public class InCallFrame extends FXAutoScene {
+
+	/** The caller id. */
 	@FXML
 	private Label callerId;
+
+	/** The timer. */
 	@FXML
 	private Label timer;
+
+	/** The hangup button. */
 	@FXML
 	private Button hangupButton;
+
+	/** The elapsed timer. */
 	public Timeline elapsedTimer;
 
+	/**
+	 * Stop.
+	 */
 	public void stop(){
 		elapsedTimer.stop();
 	}
+
+	/**
+	 * Instantiates a new in call frame.
+	 * 
+	 * @param me
+	 *            the me
+	 */
 	public InCallFrame(final CallUI me) {
 		super(me.primaryStage, DraggableWindow.CONSTRAINT_NONE, false);
 		hangupButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -36,6 +58,13 @@ public class InCallFrame extends FXAutoScene {
 		});
 	}
 
+	/**
+	 * Show.
+	 * 
+	 * @param callId
+	 *            the call id
+	 * @return the fX auto scene
+	 */
 	public FXAutoScene show(final String callId) {
 		final long startDate = new Date().getTime();
 		if(elapsedTimer!=null){

@@ -20,10 +20,24 @@ import org.micoli.phone.ccphoneUI.remote.VertX;
 import org.micoli.phone.ccphoneUI.tools.FxTools;
 import org.vertx.java.core.json.JsonObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Main.
+ */
 public class Main {
+
+	/** The calls. */
 	private static HashMap<String, CallUI> calls;
+
+	/** The main top. */
 	static MainTop mainTop;
 
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -41,6 +55,9 @@ public class Main {
 		thread.start();
 	}
 
+	/**
+	 * Inits the and show gui.
+	 */
 	private static void initAndShowGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -69,6 +86,13 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Gets the call ui.
+	 * 
+	 * @param callId
+	 *            the call id
+	 * @return the call ui
+	 */
 	public static CallUI getCallUI(final String callId) {
 		if (getCalls().containsKey(callId)) {
 			return getCalls().get(callId);
@@ -94,14 +118,28 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Gets the calls.
+	 * 
+	 * @return the calls
+	 */
 	public static HashMap<String, CallUI> getCalls() {
 		return calls;
 	}
 
+	/**
+	 * Sets the calls.
+	 * 
+	 * @param calls
+	 *            the calls
+	 */
 	public static void setCalls(HashMap<String, CallUI> calls) {
 		Main.calls = calls;
 	}
 
+	/**
+	 * Manage calls.
+	 */
 	public static void manageCalls() {
 		int n = 0;
 		Iterator<Entry<String, CallUI>> iter = calls.entrySet().iterator();
@@ -117,6 +155,9 @@ public class Main {
 		//System.out.println(String.format("ALL %d %s",Main.getCalls().size(),Main.getCalls().entrySet().toString()));
 	}
 
+	/**
+	 * Vertx client.
+	 */
 	private static void vertxClient() {
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
