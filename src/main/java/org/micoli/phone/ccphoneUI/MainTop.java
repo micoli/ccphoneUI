@@ -40,12 +40,13 @@ public class MainTop extends FXAutoFrame {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.micoli.phone.ccphoneUI.tools.FXAutoFrame#show(javafx.stage.Stage)
 	 */
 	public void show(Stage stage) {
 		start(stage);
+
 		makeDraggableTop(stage, stage.getScene().getRoot());
 		number.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -62,7 +63,7 @@ public class MainTop extends FXAutoFrame {
 
 	/**
 	 * Make draggable top.
-	 * 
+	 *
 	 * @param stage
 	 *            the stage
 	 * @param byNode

@@ -7,7 +7,10 @@ import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.stage.Popup;
+import javafx.stage.PopupBuilder;
 import javafx.stage.Stage;
 
 // TODO: Auto-generated Javadoc
@@ -24,7 +27,7 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 
 	/**
 	 * Gets the primary stage.
-	 * 
+	 *
 	 * @return the primary stage
 	 */
 	public final Stage getPrimaryStage() {
@@ -38,8 +41,7 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 	protected boolean draggable;
 
 	/*
-	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
 	 * java.util.ResourceBundle)
 	 */
@@ -48,7 +50,7 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 
 	/**
 	 * Show.
-	 * 
+	 *
 	 * @param stage
 	 *            the stage
 	 */
@@ -58,8 +60,7 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 */
 	public void start(final Stage primaryStage) {
@@ -74,12 +75,17 @@ public abstract class FXAutoFrame extends Application implements Initializable {
 			fxmlLoader = new FXMLLoader(getClass().getResource(fxmlDocument));
 			fxmlLoader.setController(this);
 			root = (Pane) fxmlLoader.load();
+			//getAlwaysOnTop(root);
 			FxTools.skinWindow(primaryStage, root, constraintWindow, draggable);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public Popup getAlwaysOnTop(Node root) {
+		Popup xmlWindow = PopupBuilder.create().content(root).width(600).height(400).x(500.0).y(0.0).build();
+		return xmlWindow;
+	}
 	/**
 	 * Show.
 	 */

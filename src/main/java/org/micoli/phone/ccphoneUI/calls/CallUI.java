@@ -263,4 +263,11 @@ public class CallUI extends Application implements Initializable {
 		isActive = false;
 		closeUI();
 	}
+
+	/**
+	 * @return the primaryStage
+	 */
+	public final Stage getPrimaryStage() {
+		return primaryStage;
+	}
 }

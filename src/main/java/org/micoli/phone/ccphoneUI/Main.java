@@ -20,7 +20,6 @@ import org.micoli.phone.ccphoneUI.remote.VertX;
 import org.micoli.phone.ccphoneUI.tools.FxTools;
 import org.vertx.java.core.json.JsonObject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Main.
  */
@@ -34,7 +33,7 @@ public class Main {
 
 	/**
 	 * The main method.
-	 * 
+	 *
 	 * @param args
 	 *            the arguments
 	 */
@@ -88,7 +87,7 @@ public class Main {
 
 	/**
 	 * Gets the call ui.
-	 * 
+	 *
 	 * @param callId
 	 *            the call id
 	 * @return the call ui
@@ -120,7 +119,7 @@ public class Main {
 
 	/**
 	 * Gets the calls.
-	 * 
+	 *
 	 * @return the calls
 	 */
 	public static HashMap<String, CallUI> getCalls() {
@@ -129,7 +128,7 @@ public class Main {
 
 	/**
 	 * Sets the calls.
-	 * 
+	 *
 	 * @param calls
 	 *            the calls
 	 */
@@ -145,7 +144,7 @@ public class Main {
 		Iterator<Entry<String, CallUI>> iter = calls.entrySet().iterator();
 		while (iter.hasNext()) {
 			Entry<String, CallUI> entry = iter.next();
-			if(!entry.getValue().isActive()){
+			if (!entry.getValue().isActive() && !entry.getValue().getPrimaryStage().isShowing()) {
 				iter.remove();
 			} else {
 				entry.getValue().position(n);

@@ -12,19 +12,19 @@ import javafx.stage.Stage;
  * The Class FXAutoScene.
  */
 public abstract class FXAutoScene {
-	
+
 	/** The fxml document. */
 	protected String fxmlDocument;
-	
+
 	/** The draggable. */
 	protected boolean draggable;
-	
+
 	/** The constraint window. */
 	public int constraintWindow;
-	
+
 	/** The root. */
 	public Pane root;
-	
+
 	/** The primary stage. */
 	protected Stage primaryStage;
 
