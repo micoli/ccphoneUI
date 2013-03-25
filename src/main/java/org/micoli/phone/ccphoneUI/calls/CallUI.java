@@ -7,12 +7,15 @@ import java.util.concurrent.ExecutionException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
+import org.micoli.phone.ccphoneUI.Main;
 import org.micoli.phone.ccphoneUI.remote.VertX;
 import org.micoli.phone.ccphoneUI.tools.FXAutoScene;
 import org.micoli.phone.ccphoneUI.tools.FxTools;
@@ -97,6 +100,11 @@ public class CallUI extends Application implements Initializable {
 		Scene appScene = new Scene(root);
 		primaryStage.setScene(appScene);
 		appScene.setFill(Color.TRANSPARENT);
+		primaryStage.setOnHidden(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent event) {
+				Main.manageCalls();
+			}
+		});
 	}
 
 	/**

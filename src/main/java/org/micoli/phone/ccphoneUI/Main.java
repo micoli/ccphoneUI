@@ -151,6 +151,7 @@ public class Main {
 				n++;
 			}
 		}
+		System.out.println(String.format("ALL %d %s", Main.getCalls().size(), Main.getCalls().entrySet().toString()));
 		//System.out.println(String.format("ALL %d %s",Main.getCalls().size(),Main.getCalls().entrySet().toString()));
 	}
 

@@ -11,24 +11,31 @@
 <!-- <?scenebuilder-preview-i18n-resource strings_fr.properties?> -->
 
 <BorderPane cache="true" cacheHint="SPEED" minHeight="46.0" mouseTransparent="false" prefHeight="36.0" prefWidth="263.0" styleClass="roundedSmallWindow" xmlns:fx="http://javafx.com/fxml">
-<center>
-	<Label fx:id="callerId" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="....." textFill="BLACK">
-	<font>
-		<Font size="13.0" fx:id="x1" />
-	</font>
-	</Label>
-</center>
-<left>
-	<Label fx:id="timer" ellipsisString="" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="60.0" text="" />
-</left>
-<right>
-	<HBox prefHeight="100.0" prefWidth="40.0">
-	<children>
-		<Button fx:id="hangupButton" ellipsisString="" font="$x1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" styleClass="buttonHangup, graphicButton" text="" textAlignment="CENTER" textFill="BLACK" textOverrun="CLIP" HBox.hgrow="NEVER" />
-	</children>
-	</HBox>
-</right>
-<stylesheets>
-	<URL value="@../css/roundedWindow.css" />
-</stylesheets>
+  <center>
+    <Label fx:id="callerId" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="...">
+      <font>
+        <Font size="13.0" fx:id="x1" />
+      </font>
+      <textFill>
+        <Color blue="0.875" green="0.875" red="0.875" fx:id="x2" />
+      </textFill>
+    </Label>
+  </center>
+  <left>
+    <Label fx:id="timer" ellipsisString="" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="40.0" text="..." textFill="$x2" BorderPane.alignment="CENTER_LEFT">
+      <BorderPane.margin>
+        <Insets left="3.0" right="3.0" />
+      </BorderPane.margin>
+    </Label>
+  </left>
+  <right>
+    <HBox prefHeight="100.0" prefWidth="40.0">
+      <children>
+        <Button fx:id="hangupButton" ellipsisString="" font="$x1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" styleClass="buttonHangup, graphicButton" text="" textAlignment="CENTER" textFill="BLACK" textOverrun="CLIP" HBox.hgrow="NEVER" />
+      </children>
+    </HBox>
+  </right>
+  <stylesheets>
+    <URL value="@../css/roundedWindow.css" />
+  </stylesheets>
 </BorderPane>

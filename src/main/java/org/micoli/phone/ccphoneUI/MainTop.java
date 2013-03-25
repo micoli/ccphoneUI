@@ -39,9 +39,6 @@ public class MainTop extends FXAutoFrame {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
 	 * org.micoli.phone.ccphoneUI.tools.FXAutoFrame#show(javafx.stage.Stage)
 	 */
 	public void show(Stage stage) {
