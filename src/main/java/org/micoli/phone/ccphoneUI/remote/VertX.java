@@ -27,7 +27,7 @@ public class VertX {
 
 	/**
 	 * Publish daemon.
-	 * 
+	 *
 	 * @param action
 	 *            the action
 	 * @param jsonObject
@@ -57,6 +57,8 @@ public class VertX {
 					return;
 				} else if (eventName.equals("registerSuccessful")) {
 					System.out.println("Client registerSuccessful : [" + eventName + "] " + message.body.toString());
+				} else if (eventName.equals("registering")) {
+					System.out.println("Client registering : [" + eventName + "] " + message.body.toString());
 				}else{
 					System.out.println("Client event : [" + eventName + "] " + message.body.toString());
 					Main.getCallUI(callId).dispatchMessage(eventName, message);
