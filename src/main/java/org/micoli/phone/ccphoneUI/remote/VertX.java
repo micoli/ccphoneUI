@@ -52,13 +52,15 @@ public class VertX {
 				String callId = message.body.getString("callId");
 				String eventName = message.body.getString("eventName");
 				if (eventName == null) {
+					System.out.println("Client No Event Name : [] " + message.body.toString());
 					Main.manageCalls();
 					return;
+				} else if (eventName.equals("registerSuccessful")) {
+					System.out.println("Client registerSuccessful : [" + eventName + "] " + message.body.toString());
+				}else{
+					System.out.println("Client event : [" + eventName + "] " + message.body.toString());
+					Main.getCallUI(callId).dispatchMessage(eventName, message);
 				}
-				System.out.println("Client event due to registration : [" + message.body.getString("text") + "]\n" + message.body.toString());
-
-				System.out.println("------");
-				Main.getCallUI(callId).dispatchMessage(eventName, message);
 			}
 		};
 
