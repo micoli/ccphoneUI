@@ -39,7 +39,7 @@ public class VertX {
 	}
 
 	/**
-	 * Inits the.
+	 * Inits the Daemon
 	 */
 	public static void init() {
 		vertx = Vertx.newVertx(2551, "localhost");
@@ -55,10 +55,16 @@ public class VertX {
 					System.out.println("Client No Event Name : [] " + message.body.toString());
 					Main.manageCalls();
 					return;
+
 				} else if (eventName.equals("registerSuccessful")) {
 					System.out.println("Client registerSuccessful : [" + eventName + "] " + message.body.toString());
+
+				} else if (eventName.equals("registerFailed")) {
+					System.out.println("Client registerFailed : [" + eventName + "] " + message.body.toString());
+
 				} else if (eventName.equals("registering")) {
 					System.out.println("Client registering : [" + eventName + "] " + message.body.toString());
+
 				}else{
 					System.out.println("Client event : [" + eventName + "] " + message.body.toString());
 					Main.getCallUI(callId).dispatchMessage(eventName, message);
@@ -69,9 +75,6 @@ public class VertX {
 		vertx.eventBus().registerHandler(guiEventAddress, myHandler);
 	}
 
-	/**
-	 * Run.
-	 */
 	public static void run() {
 	}
 }

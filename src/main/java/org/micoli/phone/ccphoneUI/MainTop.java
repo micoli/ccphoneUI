@@ -47,7 +47,7 @@ public class MainTop extends FXAutoFrame {
 		makeDraggableTop(stage, stage.getScene().getRoot());
 		number.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				VertX.publishDaemon("callAction", new JsonObject().putString("uri", number.getText()));
+				VertX.publishDaemon("call", new JsonObject().putString("uri", number.getText()));
 			}
 		});
 		microphone.setOnAction(new EventHandler<ActionEvent>() {

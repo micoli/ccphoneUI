@@ -168,7 +168,7 @@ public class Main {
 		while (true) {
 			try {
 				Thread.sleep(10000);
-				VertX.eb.publish(
+				/*VertX.eb.publish(
 						VertX.guiEventAddress,
 						new JsonObject()
 								.putString("type", "publish")
@@ -179,7 +179,7 @@ public class Main {
 												"text",
 												"ping "
 														+ (new Date())
-																.toString())));
+																.toString())));*/
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

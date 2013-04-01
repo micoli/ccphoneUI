@@ -58,7 +58,7 @@ public class CallUI extends Application implements Initializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
 	 * java.util.ResourceBundle)
 	 */
@@ -67,7 +67,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Instantiates a new call ui.
-	 * 
+	 *
 	 * @param CallID
 	 *            the call id
 	 * @param anchor
@@ -90,7 +90,7 @@ public class CallUI extends Application implements Initializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javafx.application.Application#start(javafx.stage.Stage)
 	 */
 	@Override
@@ -109,7 +109,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Position.
-	 * 
+	 *
 	 * @param n
 	 *            the n
 	 */
@@ -120,7 +120,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Checks if is active.
-	 * 
+	 *
 	 * @return true, if is active
 	 */
 	public boolean isActive() {
@@ -147,7 +147,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Gets the current scene.
-	 * 
+	 *
 	 * @return the current scene
 	 */
 	public FXAutoScene getCurrentScene() {
@@ -156,7 +156,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Sets the current scene.
-	 * 
+	 *
 	 * @param currentScene
 	 *            the new current scene
 	 */
@@ -166,7 +166,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Dispatch message.
-	 * 
+	 *
 	 * @param eventName
 	 *            the event name
 	 * @param message
@@ -181,7 +181,7 @@ public class CallUI extends Application implements Initializable {
 			displayInCallFrame(message);
 		} else if (eventName.equalsIgnoreCase("incomingCall")) {
 			displayAnswerFrame(message);
-		} else if (eventName.equalsIgnoreCase("remoteHangup")) {
+		} else if (eventName.equalsIgnoreCase("remoteHangup") || eventName.equalsIgnoreCase("close") ) {
 			try {
 				FxTools.runAndWait(new Runnable() {
 					public void run() {
@@ -201,12 +201,12 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Answer clicked.
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 */
 	public void answerClicked(ActionEvent event) {
-		VertX.publishDaemon("pickupAction", new JsonObject().putString("sipcallid", CallID));
+		VertX.publishDaemon("pickup", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("answer");
 		closeUI();
 		displayInCallFrame(null);
@@ -214,12 +214,12 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Declined clicked.
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 */
 	public void declinedClicked(ActionEvent event) {
-		VertX.publishDaemon("busyHereAction", new JsonObject().putString("sipcallid", CallID));
+		VertX.publishDaemon("busyHere", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("declined");
 		closeUI();
 	}
@@ -227,7 +227,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Display answer frame.
-	 * 
+	 *
 	 * @param message
 	 *            the message
 	 */
@@ -243,7 +243,7 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Display in call frame.
-	 * 
+	 *
 	 * @param message
 	 *            the message
 	 */
@@ -260,12 +260,12 @@ public class CallUI extends Application implements Initializable {
 
 	/**
 	 * Hangup clicked.
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 */
 	public void hangupClicked(ActionEvent event) {
-		VertX.publishDaemon("hangupAction", new JsonObject().putString("sipcallid", CallID));
+		VertX.publishDaemon("hangup", new JsonObject().putString("sipcallid", CallID));
 		System.out.println("hangup");
 		setCurrentScene(null);
 		isActive = false;
