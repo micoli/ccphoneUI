@@ -45,7 +45,7 @@ public class InCallFrame extends FXAutoScene {
 
 	/**
 	 * Instantiates a new in call frame.
-	 * 
+	 *
 	 * @param me
 	 *            the me
 	 */
@@ -57,10 +57,9 @@ public class InCallFrame extends FXAutoScene {
 			}
 		});
 	}
-
 	/**
 	 * Show.
-	 * 
+	 *
 	 * @param callId
 	 *            the call id
 	 * @return the fX auto scene
@@ -72,8 +71,15 @@ public class InCallFrame extends FXAutoScene {
 		}
 		elapsedTimer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				long dif = (new Date()).getTime()-startDate;
-				timer.setText(String.format("%d",dif/1000));
+				long dif = ((new Date()).getTime()-startDate)/1000;
+
+				int hours = (int) dif / 3600;
+				int remainder = (int) dif - hours * 3600;
+				int mins = remainder / 60;
+				remainder = remainder - mins * 60;
+				int secs = remainder;
+
+				timer.setText(String.format("%d:%02d:%02d",hours,mins,secs));
 				// System.out.println(String.format("%s %d %s %d",callId,Thread.currentThread().getId(),Thread.currentThread().getName(),
 				// dif/1000));
 			}

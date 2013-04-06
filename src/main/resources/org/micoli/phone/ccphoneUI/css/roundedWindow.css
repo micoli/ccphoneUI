@@ -6,7 +6,7 @@
 -fx-border-color: gray;
 -fx-border-style: solid;
 -fx-border-width: 1;
--fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.3, 0, 0);
+/*-fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.3, 0, 0);*/
 -fx-background-color:rgba(25, 25, 25, 0.9) ;
 }
 
@@ -18,7 +18,7 @@
 -fx-border-color: gray;
 -fx-border-style: solid;
 -fx-border-width: 1;
--fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);
+/*-fx-effect: dropshadow(two-pass-box, rgba(100, 100, 100, 1), 24, 0.5, 0, 0);*/
 -fx-background-color:rgba(25, 25, 25, 0.9) ;
 }
 

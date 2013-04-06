@@ -173,9 +173,9 @@ public class CallUI extends Application implements Initializable {
 	 *            the message
 	 */
 	public void dispatchMessage(String eventName, Message<JsonObject> message) {
-		/*if (eventName.equalsIgnoreCase("ping")) {
-			System.out.println(String.format("ALL %d",calls.size()));
-		} else*/ if (eventName.equalsIgnoreCase("ringing")) {
+		if (eventName.equalsIgnoreCase("ping")) {
+			System.out.println("ping");
+		} else if (eventName.equalsIgnoreCase("ringing")) {
 				displayInCallFrame(message);
 		} else if (eventName.equalsIgnoreCase("calleePickup")) {
 			displayInCallFrame(message);
@@ -235,7 +235,7 @@ public class CallUI extends Application implements Initializable {
 		initAnswerFrame();
 		Platform.runLater(new Runnable() {
 			public void run() {
-				System.out.println(String.format("current THREAD %d", Thread.currentThread().getId()));
+				System.out.println(String.format("current THREAD %d %s", Thread.currentThread().getId(),message.body.toString()));
 				setCurrentScene(answerFrame.show(message.body.getString("callId"), message.body.getString("fromValue")));
 			}
 		});
